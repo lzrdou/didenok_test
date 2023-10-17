@@ -4,8 +4,6 @@ from django.core.validators import RegexValidator
 from django.db import models
 from password.settings import KEY
 
-# TODO: перенести KEY в .env
-
 cipher_suite = Fernet(KEY)
 
 
