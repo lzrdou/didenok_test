@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 
-from api.models import User, PasswordForService
+from .models import User, PasswordForService
 
 
 class UserSerializer(BaseUserSerializer):
