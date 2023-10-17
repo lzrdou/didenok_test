@@ -10,7 +10,7 @@ router = SimpleRouter()
 urlpatterns = [
     path("password/", PasswordForServiceListView.as_view(), name="password-list"),
     path(
-        "password/<str:service_name>/",
+        "password/<str:service>/",
         PasswordForServiceView.as_view(),
         name="password-detail",
     ),

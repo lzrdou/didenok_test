@@ -13,11 +13,11 @@ class PasswordForServiceView(
     permission_classes = [IsAuthorOrCreateOnly]
 
     def get_queryset(self):
-        service_name = self.kwargs["service_name"]
+        service_name = self.kwargs["service"]
         return PasswordForService.objects.filter(service=service_name)
 
     def perform_create(self, serializer):
-        service_name = self.kwargs["service_name"]
+        service_name = self.kwargs["service"]
         serializer.save(created_by=self.request.user, service=service_name)
 
     def perform_update(self, serializer):
@@ -31,5 +31,5 @@ class PasswordForServiceListView(generics.ListAPIView):
     permission_classes = [IsAuthorOrCreateOnly]
 
     def get_queryset(self):
-        service_name = self.request.query_params.get("service_name", "")
+        service_name = self.request.query_params.get("service", "")
         return PasswordForService.objects.filter(service__icontains=service_name)
