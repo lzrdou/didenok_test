@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework.authtoken",
     "djoser",
-
 ]
 
 MIDDLEWARE = [
@@ -122,46 +121,45 @@ STATIC_URL = "static/"
 
 # Auth
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = "api.User"
 
 DJOSER = {
-    "LOGIN_FIELD": 'username',
+    "LOGIN_FIELD": "username",
     "PERMISSIONS": {
         "user_list": ["rest_framework.permissions.IsAdminUser"],
         "user": ["rest_framework.permissions.IsAuthenticated"],
-        "current_user": ["rest_framework.permissions.IsAuthenticated"]
+        "current_user": ["rest_framework.permissions.IsAuthenticated"],
     },
     "HIDE_USERS": False,
     "SERIALIZERS": {
-        'user_create': 'api.serializers.UserCreateSerializer',
-        'user': 'api.serializers.UserSerializer',
-        'current_user': 'api.serializers.UserSerializer',
-    }
+        "user_create": "api.serializers.UserCreateSerializer",
+        "user": "api.serializers.UserSerializer",
+        "current_user": "api.serializers.UserSerializer",
+    },
 }
 
-RESERVED_USERNAME: str = r'me'
+RESERVED_USERNAME: str = r"me"
 
 ACCEPT_REGEX = False
 
 REJECT_REGEX = True
 
 USERNAME_REGEXES = [
-    [fr'(^{RESERVED_USERNAME})$', REJECT_REGEX],
-    [r'(^[a-zA-Z0-9])$', ACCEPT_REGEX],
+    [rf"(^{RESERVED_USERNAME})$", REJECT_REGEX],
+    [r"(^[a-zA-Z0-9])$", ACCEPT_REGEX],
 ]
 
 

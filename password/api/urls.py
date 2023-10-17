@@ -1,7 +1,7 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from .views import PasswordForServiceView, PasswordForServiceListView
+from .views import PasswordForServiceListView, PasswordForServiceView
 
 app_name = "api"
 

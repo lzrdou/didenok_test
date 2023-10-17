@@ -1,8 +1,7 @@
+from cryptography.fernet import Fernet
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
-
-from cryptography.fernet import Fernet
 
 # TODO: перенести KEY в .env
 KEY = b"Akq4y-8H-fbf5XrVZtD44As0xr66qtOPTe8UwvyvG7s="
