@@ -2,7 +2,7 @@ from cryptography.fernet import Fernet
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
-from password.settings import KEY
+from ..password.settings import KEY
 
 cipher_suite = Fernet(KEY)
 
