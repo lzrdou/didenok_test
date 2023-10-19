@@ -24,8 +24,8 @@ class PasswordForServiceTests(APITestCase):
         self.assertEqual(PasswordForService.objects.count(), 1)
         self.assertEqual(PasswordForService.objects.get().service, "service1")
         self.assertEqual(PasswordForService.objects.get().created_by, self.user)
-        self.assertNotEqual(
-            PasswordForService.objects.get().encrypted_password, "password123"
+        self.assertEqual(
+            PasswordForService.objects.get().password, "password123"
         )
 
     def test_get_password_for_service(self):

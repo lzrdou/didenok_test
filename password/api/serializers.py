@@ -21,7 +21,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
     class Meta:
         model = User
-        fields = ("email", "username", "first_name", "last_name", "password")
+        fields = ("username", "password")
 
 
 class UserCreateResponseSerializer(UserSerializer):
@@ -36,7 +36,7 @@ class UserCreateResponseSerializer(UserSerializer):
 
 
 class PasswordForServiceSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
 
     class Meta:
         model = PasswordForService
@@ -48,3 +48,11 @@ class PasswordForServiceSerializer(serializers.ModelSerializer):
         instance.password = password
         instance.save()
         return instance
+
+
+class PasswordForServiceResponseSerializer(serializers.ModelSerializer):
+    password = serializers.CharField()
+
+    class Meta:
+        model = PasswordForService
+        fields = ("password",)

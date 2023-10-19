@@ -1,8 +1,9 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 
 from .models import PasswordForService
 from .permissions import IsAuthorOrCreateOnly
-from .serializers import PasswordForServiceSerializer
+from .serializers import PasswordForServiceSerializer, PasswordForServiceResponseSerializer
 
 
 class PasswordForServiceView(
@@ -13,12 +14,30 @@ class PasswordForServiceView(
     permission_classes = [IsAuthorOrCreateOnly]
 
     def get_queryset(self):
-        service_name = self.kwargs["service"]
-        return PasswordForService.objects.filter(service=service_name)
+        service = self.kwargs["service"]
+        return PasswordForService.objects.filter(service=service)
+
+    def create(self, request, *args, **kwargs):
+        service = self.kwargs["service"]
+        data = request.data
+        data["service"] = service
+        if PasswordForService.objects.filter(service=service).exists():
+            obj = PasswordForService.objects.get(service=service)
+            obj.password = data["password"]
+            obj.save()
+            headers = self.get_success_headers(data)
+            del data["service"]
+            return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        serializer = PasswordForServiceResponseSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        service_name = self.kwargs["service"]
-        serializer.save(created_by=self.request.user, service=service_name)
+        serializer.save(created_by=self.request.user)
 
     def perform_update(self, serializer):
         instance = serializer.instance
@@ -31,5 +50,6 @@ class PasswordForServiceListView(generics.ListAPIView):
     permission_classes = [IsAuthorOrCreateOnly]
 
     def get_queryset(self):
-        service_name = self.request.query_params.get("service", "")
+        service_name = self.request.query_params.get("service_name", "")
+        print(service_name)
         return PasswordForService.objects.filter(service__icontains=service_name)
