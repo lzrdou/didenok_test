@@ -3,7 +3,10 @@ from rest_framework.response import Response
 
 from .models import PasswordForService
 from .permissions import IsAuthorOrCreateOnly
-from .serializers import PasswordForServiceSerializer, PasswordForServiceResponseSerializer
+from .serializers import (
+    PasswordForServiceSerializer,
+    PasswordForServiceResponseSerializer,
+)
 
 
 class PasswordForServiceView(
@@ -34,7 +37,9 @@ class PasswordForServiceView(
         headers = self.get_success_headers(serializer.data)
         serializer = PasswordForServiceResponseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)

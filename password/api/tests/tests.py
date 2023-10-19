@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -24,9 +23,7 @@ class PasswordForServiceTests(APITestCase):
         self.assertEqual(PasswordForService.objects.count(), 1)
         self.assertEqual(PasswordForService.objects.get().service, "service1")
         self.assertEqual(PasswordForService.objects.get().created_by, self.user)
-        self.assertEqual(
-            PasswordForService.objects.get().password, "password123"
-        )
+        self.assertEqual(PasswordForService.objects.get().password, "password123")
 
     def test_get_password_for_service(self):
         password = PasswordForService.objects.create(

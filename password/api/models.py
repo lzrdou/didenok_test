@@ -1,8 +1,10 @@
+import base64
+
 from cryptography.fernet import Fernet
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
-from ..password.settings import KEY
+from password.settings import KEY
 
 cipher_suite = Fernet(KEY)
 
@@ -26,12 +28,15 @@ class User(AbstractUser):
 
 class PasswordForService(models.Model):
     service = models.SlugField(max_length=50, unique=True)
-    encrypted_password = models.BinaryField()
+    encrypted_password = models.TextField(db_column="encrypted_password", blank=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="passwords",
     )
+
+    def get_encrypted_password(self):
+        return base64.decodestring(self.encrypted_password)
 
     class Meta:
         verbose_name = "Пароль для сервиса"
@@ -47,4 +52,4 @@ class PasswordForService(models.Model):
 
     @password.setter
     def password(self, value):
-        self.encrypted_password = cipher_suite.encrypt(value.encode())
+        self.encrypted_password = cipher_suite.encrypt(value.encode()).decode("utf8")

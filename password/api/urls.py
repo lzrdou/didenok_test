@@ -10,5 +10,5 @@ urlpatterns = [
         "password/<str:service>/",
         PasswordForServiceView.as_view(),
         name="password-detail",
-    )
+    ),
 ]

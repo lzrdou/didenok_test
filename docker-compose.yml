@@ -11,7 +11,7 @@ services:
       - ./.env
 
   api:
-    build: .
+    build: ./password/
 
     restart: always
 
@@ -22,7 +22,7 @@ services:
       - ./.env
 
     ports:
-      - '80:80'
+      - '8000:8000'
 
 volumes:
   postgres_data:
