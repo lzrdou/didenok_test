@@ -23,7 +23,7 @@ DB_PORT=5432
 
 #### 2. После сборки проекта перейти в контейнеры и выполнить миграции:
 
-- ```docker-compose exec api-1 python manage.py migrate```
+- ```docker-compose exec api python manage.py migrate```
 
 #### 3. Доступные эндпоинты и примеры запросов:
 В заголовках необходимо передать JWT токен в виде пары ключ-значение ```Autorization : Bearer <token>```  
