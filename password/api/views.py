@@ -57,5 +57,5 @@ class PasswordForServiceListView(generics.ListAPIView):
     def get_queryset(self):
         service_name = self.request.query_params.get("service_name", "")
         if service_name:
-            return PasswordForService.objects.filter(service__icontains=service_name)
+            return PasswordForService.objects.filter(service__icontains=service_name, created_by=self.request.user)
         return PasswordForService.objects.none()
